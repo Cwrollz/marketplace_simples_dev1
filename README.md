@@ -1,23 +1,60 @@
-#marketplace simples - dev1 
+# Marketplace Simples - DEV1
 
-Criando o ambiente virtual:
+# Criando o ambiente virtual:
 python -m venv .venv
 
-Ativando o ambiente virtual
+# Ativando o ambiente virtual
 .venv\Scripts\activate
 
-Instalando as dependencias
+# Instalando as dependencias
 pip install -r requirements.txt
 
-Executando as migracoes
+# Executando as migracoes
 python manage.py migrate
 
-Iniciando o servidor
+# Iniciando o servidor
 python manage.py runserver
 
-Criando o nosso app core
+# Criando o nosso app core
 python manage.py startapp core
 
-instalando django
+# Instalando Django REST Framework
 pip install djangorestframework
 pip freeze > requirements.txt
+
+# Consultas
+python manage.py shell
+from core.models import Vendedor, Produto
+
+vendedor = Vendedor.objects.create(
+    nome="Ana",
+    email="ana@email.com"
+)
+
+Produto.objects.create(
+    nome="Notebook",
+    descricao="Notebook para estudos",
+    preco=2500,
+    estoque=5,
+    vendedor=vendedor
+)
+
+Produto.objects.create(
+    nome="Mouse",
+    descricao="Mouse sem fio",
+    preco=80,
+    estoque=10,
+    vendedor=vendedor
+)
+
+vendedor.produtos.all()
+
+from core.models import Tag
+
+tag1 = Tag.objects.create(nome="Eletrônicos")
+
+tag2 = Tag.objects.create(nome="Informática")
+
+Produto.objects.get(nome="Notebook").tags.add(tag1, tag2)
+
+Produto.objects.get(nome="Notebook").tags.all()
