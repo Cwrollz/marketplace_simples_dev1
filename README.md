@@ -14,3 +14,10 @@ python manage.py migrate
 
 Iniciando o servidor
 python manage.py runserver
+
+Criando o nosso app core
+python manage.py startapp core
+
+instalando django
+pip install djangorestframework
+pip freeze > requirements.txt
