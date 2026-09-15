@@ -66,13 +66,24 @@ class ProdutoQuerySet(models.QuerySet):
         return self.filter(estoque__gt=0)
 
 class ProdutoManager(models.Manager):
-    def get_queryset(self):
-        return ProdutoQuerySet(self.model, using=self._db)
+def get_queryset(self):
+    return ProdutoQuerySet(self.model, using=self._db)
 
-    def disponiveis(self):
-        return self.get_queryset().disponiveis()
+def disponiveis(self):
+    return self.get_queryset().disponiveis()
 
 #Consulta dos produtos disponíveis
 Produto.objects.disponiveis()
 
 #O método disponiveis() retorna apenas produtos com estoque maior que 0.
+
+#Teste do Signal
+
+Foi criado um Signal com post_save para atualizar o estoque quando um Pedido é confirmado.
+Durante o teste, o estoque passou de 5 para 3 após a confirmação de um pedido com 2 unidades.
+
+#Problema encontrado
+
+A mensagem do Signal não aparecia porque o shell estava usando a versão antiga da função.
+A solução foi fechar e abrir novamente o shell do Django. Após isso, o teste exibiu:
+[log] Pedido confirmado: 2
