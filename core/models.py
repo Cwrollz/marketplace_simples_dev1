@@ -27,7 +27,21 @@ class Tag(models.Model):
         return self.nome
 
 
+class ProdutoQuerySet(models.QuerySet):
+    def disponiveis(self):
+        return self.filter(estoque__gt=0)
+
+class ProdutoManager(models.Manager):
+    def get_queryset(self):
+        return ProdutoQuerySet(self.model, using=self._db)
+    def disponiveis(self):
+        return self.get_queryset().disponiveis()
+
+
 class Produto(models.Model):
+
+    objects = ProdutoManager()
+    
     nome = models.CharField(max_length=100)
     descricao = models.TextField()
     preco = models.DecimalField(max_digits=10, decimal_places=2)
