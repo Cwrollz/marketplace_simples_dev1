@@ -185,3 +185,116 @@ Resultado: HTTP 200 OK
         "total_produtos": 2
     }
 ]
+
+#jwt
+
+instalando o simpleJWT:
+pip install djangorestframework-simplejwt
+
+
+#Configuração do JWT
+
+No arquivo config/settings.py foi configurado o JWTAuthentication:
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+Essa configuração permite que a API reconheça tokens JWT nas requisições.
+
+#Endpoints de autenticação
+
+Foram adicionados dois endpoints em config/urls.py:
+
+POST /api/token/
+POST /api/token/refresh/
+
+O endpoint /api/token/ é utilizado para obter os tokens de acesso e de renovação.
+
+O endpoint /api/token/refresh/ é utilizado para obter um novo token de acesso a partir do refresh token.
+
+#Teste de obtenção do token
+
+Foi realizado um teste utilizando o Postman.
+
+POST /api/token/
+
+Body:
+
+{
+    "username": "teste",
+    "password": "123456"
+}
+
+Resultado: HTTP 200 OK
+
+A resposta retornou os campos:
+
+{
+    "refresh": "...",
+    "access": "..."
+}
+
+#Teste de renovação do token
+
+Também foi testado o endpoint:
+
+POST /api/token/refresh/
+
+Body:
+
+{
+    "refresh": "..."
+}
+
+Resultado: HTTP 200 OK
+
+A resposta retornou um novo token:
+
+{
+    "access": "..."
+}
+
+#Permissões
+
+Foi utilizado o IsAuthenticated para proteger o endpoint de vendedores.
+
+No arquivo core/views.py, o VendedorViewSet foi configurado para exigir autenticação:
+
+permission_classes = [IsAuthenticated]
+
+#Teste sem token
+
+GET /api/vendedores/
+
+Resultado: HTTP 401 Unauthorized
+
+Resposta:
+
+{
+    "detail": "As credenciais de autenticação não foram fornecidas."
+}
+
+O resultado confirmou que o endpoint não pode ser acessado sem autenticação.
+
+#Teste com token
+
+GET /api/vendedores/
+
+Foi utilizado um access token JWT válido no cabeçalho da requisição.
+
+Resultado: HTTP 200 OK
+
+Resposta:
+
+[
+    {
+        "id": 1,
+        "nome": "Ana",
+        "email": "ana@email.com"
+    }
+]
+
+O resultado confirmou que o endpoint pode ser acessado quando o usuário fornece um token JWT válido.

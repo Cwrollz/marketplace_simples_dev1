@@ -4,6 +4,7 @@ from .serializers import ProdutoSerializer, VendedorSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.db.models import Count
+from rest_framework.permissions import IsAuthenticated
 
 class ProdutoViewSet(viewsets.ModelViewSet):
     queryset = Produto.objects.all()
@@ -12,6 +13,7 @@ class ProdutoViewSet(viewsets.ModelViewSet):
 class VendedorViewSet(viewsets.ModelViewSet):
     queryset = Vendedor.objects.all()
     serializer_class = VendedorSerializer
+    permission_classes = [IsAuthenticated]
 
 class VendedoresComProdutosAPIView(APIView):
     def get(self, request):
