@@ -194,31 +194,100 @@ O teste também confirmou o funcionamento do serializer aninhado, exibindo as ta
 ```text
 GET /api/produtos/
 Resultado: HTTP 200 OK
+```
 
+```text
 POST /api/produtos/
-Resultado: HTTP 201 Created
-Produto criado: Teclado
+```
 
+Body:
+
+```json
+{
+    "nome": "Teclado",
+    "descricao": "Teclado mecânico",
+    "preco": "100.00",
+    "estoque": 10,
+    "vendedor": 1
+}
+```
+
+Resultado:
+
+```text
+HTTP 201 Created
+Produto criado: Teclado
+```
+
+Resposta:
+
+```json
+{
+    "id": 3,
+    "nome": "Teclado",
+    "descricao": "Teclado mecânico",
+    "preco": "100.00",
+    "estoque": 10,
+    "vendedor": 1,
+    "tags": []
+}
+```
+
+```text
 PUT /api/produtos/3/
 Resultado: HTTP 200 OK
+```
 
+```text
 DELETE /api/produtos/3/
 Resultado: HTTP 204 No Content
 ```
 
 #Teste do CRUD de Vendedor
 
+Os testes foram realizados utilizando autenticação JWT.
+
 ```text
 GET /api/vendedores/
 Resultado: HTTP 200 OK
+```
 
+```text
 POST /api/vendedores/
-Resultado: HTTP 201 Created
-Vendedor criado: Breno
+```
 
+Body:
+
+```json
+{
+    "nome": "Breno",
+    "email": "breno@email.com"
+}
+```
+
+Resultado:
+
+```text
+HTTP 201 Created
+Vendedor criado: Breno
+```
+
+Resposta:
+
+```json
+{
+    "id": 2,
+    "nome": "Breno",
+    "email": "breno@email.com"
+}
+```
+
+```text
 PUT /api/vendedores/2/
 Resultado: HTTP 200 OK
+```
 
+```text
 DELETE /api/vendedores/2/
 Resultado: HTTP 204 No Content
 ```
@@ -237,7 +306,7 @@ Resultado:
 HTTP 200 OK
 ```
 
-Exemplo:
+Exemplo de resposta:
 
 ```json
 [
@@ -410,4 +479,4 @@ Foram realizados testes de:
 - acesso sem token, retornando `401 Unauthorized`;
 - acesso com token, retornando `200 OK`.
 
-As evidências dos testes estão nos prints e na coleção do Postman.
+As evidências dos testes estão disponíveis na pasta `evidencias/`, junto com a coleção exportada do Postman.
