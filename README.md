@@ -102,3 +102,86 @@ O teste retornou as tags do Notebook dentro do produto:
     {'id': 1, 'nome': 'Eletrônicos'},
     {'id': 2, 'nome': 'Informática'}
 ]
+
+#Criando ViewSet de Produto
+
+Foi criado o ProdutoViewSet utilizando ModelViewSet para preparar o CRUD completo de Produto.
+
+O ViewSet utiliza o ProdutoSerializer e o modelo Produto.
+
+#Criando ViewSet e Router de Produto
+
+Foi criado o ProdutoViewSet utilizando ModelViewSet para disponibilizar o CRUD de Produto.
+
+O ViewSet foi registrado no Router, criando as rotas da API.
+
+#Teste da API de Produtos
+
+Acessando /api/produtos/, a API retornou os produtos cadastrados com HTTP 200 OK.
+
+O teste também confirmou o funcionamento do serializer aninhado, exibindo as tags relacionadas ao Notebook dentro do resultado do produto.
+
+#Teste do POST
+
+Foi realizado um POST em /api/produtos/ para criar um novo produto.
+
+Resultado: HTTP 201 Created.
+
+Produto criado:
+Nome: Teclado
+Preço: 100.00
+Estoque: 10
+Vendedor: Ana
+Tags: nenhuma
+
+obs: No campo Vendedor aparece apenas "Ana" porque, até o momento, existe somente um Vendedor cadastrado no banco de dados.
+
+#Em resumo: Teste do CRUD de Produto
+
+GET /api/produtos/
+Resultado: HTTP 200 OK
+
+POST /api/produtos/
+Resultado: HTTP 201 Created
+Foi criado o produto Teclado.
+
+PUT /api/produtos/3/
+Resultado: HTTP 200 OK
+O produto foi atualizado.
+
+DELETE /api/produtos/3/
+Resultado: HTTP 204 No Content
+O produto foi excluído com sucesso.
+
+#Teste do CRUD de Vendedor
+
+GET /api/vendedores/
+Resultado: HTTP 200 OK
+Foi exibido o vendedor Ana.
+
+POST /api/vendedores/
+Resultado: HTTP 201 Created
+Foi criado o vendedor Breno.
+
+PUT /api/vendedores/2/
+Resultado: HTTP 200 OK
+O vendedor foi atualizado para Breno da Silva.
+
+DELETE /api/vendedores/2/
+Resultado: HTTP 204 No Content
+O vendedor foi excluído com sucesso.
+
+#Endpoint de agregação de vendedores
+
+Foi criada uma consulta com annotate() e Count() para calcular a quantidade de produtos de cada vendedor.
+
+GET /api/vendedores/com-produtos/
+
+Resultado: HTTP 200 OK
+
+[
+    {
+        "nome": "Ana",
+        "total_produtos": 2
+    }
+]
