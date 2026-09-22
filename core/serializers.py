@@ -7,6 +7,7 @@ class TagSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ProdutoSerializer(serializers.ModelSerializer):
+    tags = TagSerializer(many=True)
     class Meta:
         model = Produto
         fields = '__all__'

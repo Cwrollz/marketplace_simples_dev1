@@ -87,3 +87,18 @@ Durante o teste, o estoque passou de 5 para 3 após a confirmação de um pedido
 A mensagem do Signal não aparecia porque o shell estava usando a versão antiga da função.
 A solução foi fechar e abrir novamente o shell do Django. Após isso, o teste exibiu:
 [log] Pedido confirmado: 2
+
+#Criando serializers
+
+Foi criado um serializer para Produto e um serializer para Tag.
+
+O ProdutoSerializer utiliza o TagSerializer como serializer aninhado (nested), permitindo visualizar as tags relacionadas ao produto.
+
+#Teste do serializer aninhado
+
+O teste retornou as tags do Notebook dentro do produto:
+
+'tags': [
+    {'id': 1, 'nome': 'Eletrônicos'},
+    {'id': 2, 'nome': 'Informática'}
+]
